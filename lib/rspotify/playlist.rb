@@ -161,11 +161,12 @@ module RSpotify
       puts "creating url"
       url = "#{@path}/tracks?uris=#{track_uris}"
       url << "&position=#{position}" if position
+      puts URL
       puts "url done"
 
-      puts ="making call"
+      puts "making call"
       response = User.oauth_post(@owner.id, url, {}.to_json)
-      puts ="call done"
+      puts "call done"
       puts response.inspect
       @total += tracks.size
       @tracks_cache = nil
