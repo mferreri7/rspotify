@@ -159,7 +159,7 @@ module RSpotify
       end
       puts "uris created"
       puts "creating url"
-      url = "#{@path}/tracks?uris=#{track_uris}"
+      url = "playlists/#{@id}/tracks?uris=#{track_uris}"
       url << "&position=#{position}" if position
       puts url
       puts "url done"
