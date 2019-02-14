@@ -156,7 +156,7 @@ module RSpotify
       else
         track_uris = tracks.map(&:uri).join(',')
       end
-      url = "#{@path}/tracks?uris=#{track_uris}"
+      url = RSpotify::API_URI + @path + "/tracks?uris=#{track_uris}"
       url << "&position=#{position}" if position
 
       response = User.oauth_post(@owner.id, url, {}.to_json)
