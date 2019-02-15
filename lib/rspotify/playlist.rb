@@ -151,36 +151,15 @@ module RSpotify
     #           playlist.tracks[20].name #=> "Somebody That I Used To Know"
     def add_tracks!(tracks, position: nil)
       track_uris = nil
-      puts "creating tracks uris"
       if tracks.first.is_a? String
         track_uris = tracks.join(',')
       else
         track_uris = tracks.map(&:uri).join(',')
       end
-
-      puts "uris created"
-
-      puts "creating url"
-      url = "playlists/#{@id}/tracks?uris=#{track_uris}"
+      url = "#{@path}/tracks?uris=#{track_uris}"
       url << "&position=#{position}" if position
 
-      params = {
-        method: :post,
-        url: URI::encode(RSpotify::API_URI + url),
-        headers: User.send(:oauth_header, @owner.id)
-        # payload: positions ? { positions: positions } : { tracks: tracks }
-      }
-      puts params[:url]
-      puts "url done"
-      puts "yes new version"
-      # params[:payload][:snapshot_id] = snapshot_id if snapshot_id
-      # params[:payload] = params[:payload].to_json
-      puts "making call"
-      response = RestClient::Request.execute(params)
-      puts "call done"
-
-      # @snapshot_id = JSON.parse(response)['snapshot_id']
-      # response = User.oauth_post(@owner.id, url, {}.to_json)
+      response = User.oauth_post(@owner.id, url, {}.to_json)
       @total += tracks.size
       @tracks_cache = nil
 
